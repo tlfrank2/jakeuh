@@ -174,7 +174,7 @@ function validateUsernameOnBlur() {
 // Function to validate the username field on input and give real-time feedback
 function validateUsername() {
     const username = document.forms['registration']['userid'].value;
-    const usernamePattern = /^[A-Za-z]+[A-Za-z0-9-_]{8,}$/;
+    const usernamePattern = /^[A-Za-z][A-Za-z0-9-_]{3,19}$/;
     const feedbackElement = document.getElementById('username-feedback');
 
     if (!usernamePattern.test(username)) {
