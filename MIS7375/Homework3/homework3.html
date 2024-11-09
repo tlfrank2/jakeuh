@@ -57,6 +57,7 @@ Description: In MIS 3371 Homework 2 we are learning about javascript functions a
 			<label for="userid">New User ID:</label>
 			<input	type="text" 
 					name="userid" 
+					id:"userid"
 					size="12" 
 					placeholder="Username" 
 					maxlength="20"
@@ -64,8 +65,7 @@ Description: In MIS 3371 Homework 2 we are learning about javascript functions a
 					pattern="[A-Za-z]+[A-Za-z0-9-_]{8,}" 
 					title="Minimum 4 characters, no spaces or special characters."
 					required
-					oninvalid="this.setCustomValidity('Invalid User ID. Enter letters, numbers, dash or underscores. 1st character must be a letter.')"
-                    			oninput="this.setCustomValidity('')"/>
+					oninput="validateUsername()"/>
 
 
 			<label for="pass_hashed"> Password:</label>
