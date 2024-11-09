@@ -64,7 +64,8 @@ Description: In MIS 3371 Homework 2 we are learning about javascript functions a
 					pattern="[A-Za-z]+[A-Za-z0-9-_]{8,}" 
 					title="Minimum 4 characters, no spaces or special characters."
 					required
-					oninput="validateUsername()"/>
+					oninvalid="this.setCustomValidity('Invalid User ID. Enter letters, numbers, dash or underscores. 1st character must be a letter.')"
+                    			oninput="this.setCustomValidity('')"/>
 
 
 			<label for="pass_hashed"> Password:</label>
