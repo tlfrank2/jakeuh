@@ -28,41 +28,6 @@ function getdata1() {
      formoutput += "<td class='outputdata'>Valid password</td></tr>"; 
  }
 
- // Function to show the instructions when the user focuses on the username field
-function showInstructions() {
-    const instructions = document.createElement("p");
-    instructions.id = "username-instructions";
-    instructions.textContent = "Username must start with a letter and be at least 4 characters long.";
-    const field = document.getElementById("userid");
-    if (!document.getElementById("username-instructions")) {
-        field.parentNode.appendChild(instructions);
-    }
-}
-
-// Function to remove instructions when the user leaves the field
-function validateUsernameOnBlur() {
-    const instructions = document.getElementById("username-instructions");
-    if (instructions) {
-        instructions.remove();
-    }
-}
-
-// Function to validate the username field on input and give real-time feedback
-function validateUsername() {
-    const username = document.getElementById("userid").value;
-    const usernamePattern = /^[A-Za-z][A-Za-z0-9-_]{3,19}$/;
-    const isValid = usernamePattern.test(username);
-    const field = document.getElementById("userid");
-
-    // Change the border color based on validity
-    if (isValid) {
-        field.style.borderColor = "green"; // Valid input
-    } else {
-        field.style.borderColor = "red"; // Invalid input
-    }
-}
-
-
  if (firstName.length < 2) {
      formoutput += "<tr><td align='right'>First Name:</td>";
      formoutput += "<td class='outputdata'>Invalid name... too short.</td></tr>"; 
@@ -184,6 +149,41 @@ function formatPhoneNumber(phoneNumber) {
 
 function updateSliderValue(value) {
     document.getElementById("slider-value").textContent = value;
+}
+
+
+ // Function to show the instructions when the user focuses on the username field
+function showInstructions() {
+    const instructions = document.createElement("p");
+    instructions.id = "username-instructions";
+    instructions.textContent = "Username must start with a letter and be at least 4 characters long.";
+    const field = document.getElementById("userid");
+    if (!document.getElementById("username-instructions")) {
+        field.parentNode.appendChild(instructions);
+    }
+}
+
+// Function to remove instructions when the user leaves the field
+function validateUsernameOnBlur() {
+    const instructions = document.getElementById("username-instructions");
+    if (instructions) {
+        instructions.remove();
+    }
+}
+
+// Function to validate the username field on input and give real-time feedback
+function validateUsername() {
+    const username = document.getElementById("userid").value;
+    const usernamePattern = /^[A-Za-z][A-Za-z0-9-_]{3,19}$/;
+    const isValid = usernamePattern.test(username);
+    const field = document.getElementById("userid");
+
+    // Change the border color based on validity
+    if (isValid) {
+        field.style.borderColor = "green"; // Valid input
+    } else {
+        field.style.borderColor = "red"; // Invalid input
+    }
 }
 
 
