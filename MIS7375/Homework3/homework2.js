@@ -146,3 +146,9 @@ function formatPhoneNumber(phoneNumber) {
  } 
  return phoneNumber; 
 }
+
+function updateSliderValue(value) {
+    document.getElementById("slider-value").textContent = value;
+}
+
+
