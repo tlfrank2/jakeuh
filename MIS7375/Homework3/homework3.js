@@ -173,10 +173,19 @@ function validateUsernameOnBlur() {
 
 // Function to validate the username field on input and give real-time feedback
 function validateUsername() {
-    const username = document.getElementById("userid").value;
-    const usernamePattern = /^[A-Za-z][A-Za-z0-9-_]{3,19}$/;
-    const isValid = usernamePattern.test(username);
-    const field = document.getElementById("userid");
+    const username = document.forms['registration']['userid'].value;
+    const usernamePattern = /^[A-Za-z]+[A-Za-z0-9-_]{8,}$/;
+    const feedbackElement = document.getElementById('username-feedback');
+
+    if (!usernamePattern.test(username)) {
+        feedbackElement.textContent = "Invalid username. Ensure it has at least 8 characters and no special characters.";
+        feedbackElement.style.color = "red";
+    } else {
+        feedbackElement.textContent = "Username is valid.";
+        feedbackElement.style.color = "green";
+    }
+}
+
 
     // Change the border color based on validity
     if (isValid) {
