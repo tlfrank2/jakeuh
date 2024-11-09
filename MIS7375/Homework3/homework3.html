@@ -63,7 +63,10 @@ Description: In MIS 3371 Homework 2 we are learning about javascript functions a
 					minlength="4"
 					pattern="[A-Za-z]+[A-Za-z0-9-_]{8,}" 
 					title="Minimum 4 characters, no spaces or special characters."
-					required/>
+					required
+					oninput="validateUsername()" 
+       					onfocus="showInstructions()" 
+      					onblur="validateUsernameOnBlur()"/>
 
 			<label for="pass_hashed"> Password:</label>
 			<input	type="password" 
