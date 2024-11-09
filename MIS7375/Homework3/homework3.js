@@ -154,12 +154,13 @@ function updateSliderValue(value) {
 
  // Function to show the instructions when the user focuses on the username field
 function showInstructions() {
-    const instructions = document.createElement("p");
-    instructions.id = "username-instructions";
-    instructions.textContent = "Username must start with a letter and be at least 4 characters long.";
-    const field = document.getElementById("userid");
-    if (!document.getElementById("username-instructions")) {
-        field.parentNode.appendChild(instructions);
+    const instructions = document.getElementById("username-instructions");
+    if (!instructions) {
+        const newInstructions = document.createElement("p");
+        newInstructions.id = "username-instructions";
+        newInstructions.textContent = "Username must start with a letter and be at least 4 characters long.";
+        const field = document.getElementById("userid");
+        field.parentNode.appendChild(newInstructions);
     }
 }
 
