@@ -151,3 +151,73 @@ function updateSliderValue(value) {
     document.getElementById("slider-value").textContent = value;
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.forms['registration'];
+
+    form['userid'].addEventListener("input", validateUserId);
+    form['firstname'].addEventListener("input", validateFirstName);
+    form['lastname'].addEventListener("input", validateLastName);
+    form['pass_hashed'].addEventListener("input", validatePassword);
+    form['pass_hashed2'].addEventListener("input", validateConfirmPassword);
+    form['email'].addEventListener("input", validateEmailField);
+    form['phone'].addEventListener("input", validatePhoneField);
+});
+
+function validateUserId() {
+    const userId = document.forms['registration'].elements['userid'].value;
+    displayMessage("userid", userId.length >= 5 ? "User ID looks good!" : "User ID should be at least 5 characters.");
+}
+
+function validateFirstName() {
+    const firstName = document.forms['registration'].elements['firstname'].value;
+    displayMessage("firstname", firstName.length >= 2 && /^[a-zA-Z'-]+$/.test(firstName) ? "Valid first name." : "First name is too short or contains invalid characters.");
+}
+
+function validateLastName() {
+    const lastName = document.forms['registration'].elements['lastname'].value;
+    displayMessage("lastname", lastName.length >= 2 && /^[a-zA-Z'-]+$/.test(lastName) ? "Valid last name." : "Last name is too short or contains invalid characters.");
+}
+
+function validatePassword() {
+    const form = document.forms['registration'];
+    const password = form.elements['pass_hashed'].value;
+    const userId = form.elements['userid'].value;
+    const firstName = form.elements['firstname'].value;
+    const lastName = form.elements['lastname'].value;
+    
+    let message = "Password is valid.";
+    if (password.includes(userId) || password.includes(firstName) || password.includes(lastName)) {
+        message = "Password cannot contain User ID, First Name, or Last Name.";
+    }
+    displayMessage("pass_hashed", message);
+}
+
+function validateConfirmPassword() {
+    const form = document.forms['registration'];
+    const password = form.elements['pass_hashed'].value;
+    const confirmPassword = form.elements['pass_hashed2'].value;
+
+    displayMessage("pass_hashed2", password === confirmPassword ? "Passwords match." : "Passwords do not match.");
+}
+
+function validateEmailField() {
+    const email = document.forms['registration'].elements['email'].value;
+    displayMessage("email", validateEmail(email) ? "Valid email." : "Invalid email format.");
+}
+
+function validatePhoneField() {
+    const phoneNumber = document.forms['registration'].elements['phone'].value;
+    displayMessage("phone", validatePhoneNumber(phoneNumber) ? "Valid phone number." : "Invalid phone number format.");
+}
+
+function displayMessage(fieldId, message) {
+    const messageBox = document.getElementById(`${fieldId}-message`);
+    if (!messageBox) {
+        const newMessageBox = document.createElement("div");
+        newMessageBox.id = `${fieldId}-message`;
+        newMessageBox.className = "validation-message";
+        document.body.appendChild(newMessageBox);
+    }
+    document.getElementById(`${fieldId}-message`).innerText = message;
+}
+
