@@ -1,9 +1,9 @@
 /* 
  Name: Tyrese Franklin
- File: homework2.js
- Date Created: 2024-10-12
- Date Updated: 2024-10-19
- Purpose: To validate data and add dynamic features html doesn't offer.
+ File: homework3.js
+ Date Created: 2024-10-20
+ Date Updated: 2024-11-9
+ Purpose: To validate data on the fly.
  
 */ 
 
