@@ -1,6 +1,6 @@
 /* 
  Name: Tyrese Franklin
- File: homework3.js
+ File: homework2.js
  Date Created: 2024-10-12
  Date Updated: 2024-10-19
  Purpose: To validate data and add dynamic features html doesn't offer.
@@ -150,5 +150,4 @@ function formatPhoneNumber(phoneNumber) {
 function updateSliderValue(value) {
     document.getElementById("slider-value").textContent = value;
 }
-
 
