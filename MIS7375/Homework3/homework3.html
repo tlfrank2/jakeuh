@@ -9,6 +9,7 @@ Description: Validating data on the fly with event listeners while still using h
 
 
        
+       
 <html>
     <head>
     <body>
@@ -327,8 +328,7 @@ Description: Validating data on the fly with event listeners while still using h
             <input  type="tel" 
                     id="phone" 
                     name="phone" 
-                    pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
-                    placeholder="1234567890" 
+                    placeholder="123-456-7890" 
                     required><br><br>
 
             
@@ -336,9 +336,14 @@ Description: Validating data on the fly with event listeners while still using h
                     value="Clear Form and Start Over">
 
             
-            <input  type="submit" 
-                    name="submit" 
-                    value="Submit" />
+    
+            <button type="button" onclick="getdata1()">Validate</button>
+
+            <button type="submit" id="submit-btn" style="display: none;">Submit</button>
+
+
+
+
                     
             <input  type="button" 
                     value="Review" 
@@ -347,8 +352,9 @@ Description: Validating data on the fly with event listeners while still using h
 
     </div>
     
-<!-- Display form data -->
 <section id="output" class="output-box"></section>
+
+<div id="output"></div>
     
 </div>
     <!-- Footer -->
