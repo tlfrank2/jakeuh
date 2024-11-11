@@ -87,6 +87,22 @@ h2 {
     color: #333;
 }
 
+#submit-btn {
+    display: none; 
+}
+
+#submit-btn.show {
+    display: inline-block; 
+    background-color: #429E9D;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
 
 
 
