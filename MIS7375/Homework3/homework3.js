@@ -7,144 +7,111 @@
  
 */ 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const validateButton = document.getElementById('validate-btn');
+    
+    validateButton.addEventListener('click', function(event) {
+        event.preventDefault();  
+        getdata1();              
+    });
+});
+
 function getdata1() {
- var formcontents = document.forms['registration']; 
- var formoutput = "<h2>PLEASE REVIEW THIS INFORMATION</h2>"; formoutput += "<div class='output-box'><table>";
- var i; var emailAdded = false; var error_flag = 0;
+    var formcontents = document.forms['registration'];
+    var formoutput = "<h2>Please review the following information:</h2>";
+    formoutput += "<ul>";  
+    var errorMessages = [];
+    var error_flag = 0;
 
- var userId = formcontents.elements['userid'].value; 
- var firstName = formcontents.elements['firstname'].value; 
- var lastName = formcontents.elements['lastname'].value; 
- var password = formcontents.elements['pass_hashed'].value; 
- var confirmPassword = formcontents.elements['pass_hashed2'].value; 
+    var userId = formcontents.elements['userid'].value;
+    var firstName = formcontents.elements['firstname'].value;
+    var lastName = formcontents.elements['lastname'].value;
+    var password = formcontents.elements['pass_hashed'].value;
+    var confirmPassword = formcontents.elements['pass_hashed2'].value;
+    var email = formcontents.elements['email'].value;
+    var phoneNumber = formcontents.elements['phone'].value;
 
- if (password !== confirmPassword) {
-     formoutput += "<tr><td align='right'>Password:</td>"; formoutput += "<td class='outputdata'>Passwords do not match</td></tr>"; error_flag = 1;
- } else if (password === userId || password.includes(userId) || password.includes(firstName) || password.includes(lastName)) {
-     formoutput += "<tr><td align='right'>Password:</td>"; 
-     formoutput += "<td class='outputdata'>Password cannot contain User ID, First Name, or Last Name</td></tr>"; error_flag = 1; 
- } else { 
-     formoutput += "<tr><td align='right'>Password:</td>"; 
-     formoutput += "<td class='outputdata'>Valid password</td></tr>"; 
- }
+    if (password !== confirmPassword) {
+        errorMessages.push("Passwords do not match.");
+        error_flag = 1;
+    } else if (password === userId || password.includes(userId) || password.includes(firstName) || password.includes(lastName)) {
+        errorMessages.push("Password cannot contain User ID, First Name, or Last Name.");
+        error_flag = 1;
+    }
 
- if (firstName.length < 2) {
-     formoutput += "<tr><td align='right'>First Name:</td>";
-     formoutput += "<td class='outputdata'>Invalid name... too short.</td></tr>"; 
-     error_flag = 1; 
- } else if (!firstName.match(/^[a-zA-Z3-5'-]+$/)) {
-     formoutput += "<tr><td align='right'>First Name:</td>";
-     formoutput += "<td class='outputdata'>Invalid characters in name.</td></tr>"; 
-     error_flag = 1; 
- }
+    if (firstName.length < 2 || !firstName.match(/^[a-zA-Z'-]+$/)) {
+        errorMessages.push("Invalid First Name: Too short or contains invalid characters.");
+        error_flag = 1;
+    }
 
- if (lastName.length < 2) {
-     formoutput += "<tr><td align='right'>Last Name:</td>"; 
-     formoutput += "<td class='outputdata'>Invalid name... too short.</td></tr>"; 
-     error_flag = 1; 
- } else if (!lastName.match(/^[a-zA-Z3-5'-]+$/)) {
-     formoutput += "<tr><td align='right'>Last Name:</td>";
-     formoutput += "<td class='outputdata'>Invalid characters in name.</td></tr>"; 
-     error_flag = 1; 
- }
+    if (lastName.length < 2 || !lastName.match(/^[a-zA-Z'-]+$/)) {
+        errorMessages.push("Invalid Last Name: Too short or contains invalid characters.");
+        error_flag = 1;
+    }
 
- for (i = 0; i < formcontents.length; i++) {
-     var elementName = formcontents.elements[i].name; 
-     var elementValue = formcontents.elements[i].value;
+    if (!validateEmail(email)) {
+        errorMessages.push("Invalid email format.");
+        error_flag = 1;
+    }
 
-     if (formcontents.elements[i].type !== "button" && 
-         formcontents.elements[i].type !== "submit" && 
-         formcontents.elements[i].type !== "reset") {
+    if (!validatePhoneNumber(phoneNumber)) {
+        errorMessages.push("Invalid phone number format.");
+        error_flag = 1;
+    }
 
-         if (formcontents.elements[i].type === "checkbox" && formcontents.elements[i].checked) {
-             if (elementName === "past_ailments") {
-                 formoutput += "<tr><td align='right'>Past Ailments:</td>";
-                 formoutput += "<td class='outputdata'>" + elementValue + "</td></tr>";
-             }
-         } else if (formcontents.elements[i].type === "radio" && formcontents.elements[i].checked) {
-             formoutput += "<tr><td align='right'>" + elementName + ":</td>";
-             formoutput += "<td class='outputdata'>" + elementValue + "</td></tr>";
-         } else if (formcontents.elements[i].type === "text" && elementName !== "ssn_obscured" && elementValue !== "") {
-             if (elementName === 'email' && !emailAdded) {
-                 emailAdded = true; 
-             } else {
-                 formoutput += "<tr><td align='right'>" + elementName + ":</td>";
-                 formoutput += "<td class='outputdata'>" + elementValue + "</td></tr>"; 
-             }
-         } else if (formcontents.elements[i].type === "date" && elementName === "dob") {
-             const formattedDate = new Date(elementValue).toLocaleDateString(); 
-             formoutput += "<tr><td align='right'>Date of Birth:</td>"; 
-             formoutput += "<td class='outputdata'>" + formattedDate + "</td></tr>"; 
-         }
-     }
- }
+    for (i = 0; i < formcontents.length; i++) {
+        var elementName = formcontents.elements[i].name;
+        var elementValue = formcontents.elements[i].value;
 
- var pastAilments = []; 
- for (i = 0; i < formcontents.elements.length; i++) {
-     if (formcontents.elements[i].type === "checkbox" && formcontents.elements[i].checked) {
-         pastAilments.push(formcontents.elements[i].value);
-     }
- }
+        if (formcontents.elements[i].type !== "button" && 
+            formcontents.elements[i].type !== "submit" && 
+            formcontents.elements[i].type !== "reset") {
 
- if (pastAilments.length > 0) {
-     formoutput += "<tr><td align='right'>Past Ailments:</td>";
-     formoutput += "<td class='outputdata'>" + pastAilments.join(", ") + "</td></tr>"; 
- }
+            if (formcontents.elements[i].type === "checkbox" && formcontents.elements[i].checked) {
+                if (elementName === "past_ailments") {
+                    formoutput += `<li><strong>Past Ailments:</strong> ${elementValue}</li>`;
+                }
+            } else if (formcontents.elements[i].type === "radio" && formcontents.elements[i].checked) {
+                formoutput += `<li><strong>${elementName}:</strong> ${elementValue}</li>`;
+            } else if (formcontents.elements[i].type === "text" && elementName !== "ssn_obscured" && elementValue !== "") {
+                formoutput += `<li><strong>${elementName}:</strong> ${elementValue}</li>`;
+            } else if (formcontents.elements[i].type === "date" && elementName === "dob") {
+                const formattedDate = new Date(elementValue).toLocaleDateString();
+                formoutput += `<li><strong>Date of Birth:</strong> ${formattedDate}</li>`;
+            }
+        }
+    }
 
- const ssn = document.getElementById('ssn_obscured').value; 
- const maskedSSN = '***-**-' + ssn.slice(-4); 
- formoutput += "<tr><td align='right'>SSN:</td>";
- formoutput += "<td class='outputdata'>" + maskedSSN + "</td></tr>"; 
+    if (error_flag) {
+        alert("Please correct the following errors:\n\n" + errorMessages.join("\n"));
+        document.getElementById("submit-btn").style.display = "none"; 
+    } else {
+        alert("All fields are valid. You may now submit the form.");
+        document.getElementById("submit-btn").style.display = "inline"; 
+    }
 
- var email = formcontents.elements['email'].value; 
- if (validateEmail(email)) {
-     formoutput += "<tr><td align='right'>Email:</td>"; 
-     formoutput += "<td class='outputdata'>" + formatEmail(email) + "</td></tr>"; 
- } else { 
-     formoutput += "<tr><td align='right'>Email:</td>"; 
-     formoutput += "<td class='outputdata'>Invalid email format</td></tr>"; 
-     error_flag = 1; 
- }
+    if (errorMessages.length > 0) {
+        formoutput += "<li><strong>Errors:</strong></li>";
+        formoutput += "<ul>";  
+        errorMessages.forEach(function(msg) {
+            formoutput += `<li>${msg}</li>`;
+        });
+        formoutput += "</ul>";
+    }
 
- var phoneNumber = formcontents.elements['phone'].value; 
- if (validatePhoneNumber(phoneNumber)) {
-     formoutput += "<tr><td align='right'>Phone Number:</td>"; 
-     formoutput += "<td class='outputdata'>" + formatPhoneNumber(phoneNumber) + "</td></tr>"; 
- } else {
-     formoutput += "<tr><td align='right'>Phone Number:</td>"; 
-     formoutput += "<td class='outputdata'>Invalid phone number format</td></tr>"; 
-     error_flag = 1; 
- }
-
- formoutput += "</table></div>";
-
- if (error_flag) {
-     document.getElementById("output").innerHTML = "<p>Please correct the indicated errors.</p>" + formoutput;
- } else { 
-     document.getElementById("output").innerHTML = formoutput; 
- }
+    formoutput += "</ul>";  
+    document.getElementById("output").innerHTML = formoutput;
 }
+
 
 function validateEmail(email) {
- const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
- return emailRegex.test(email); 
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
 }
 
-function formatEmail(email) { 
- return email.trim().toLowerCase(); 
-}
-
-function validatePhoneNumber(phoneNumber) { 
- const phoneRegex = /^\d{3}-\d{3}-\d{4}$/; 
- return phoneRegex.test(phoneNumber); 
-}
-
-function formatPhoneNumber(phoneNumber) { 
- const cleaned = phoneNumber.replace(/\D/g, ''); 
- if (cleaned.length === 10) { 
-     return `${cleaned.slice(0, 3)}-${cleaned.slice(3, 6)}-${cleaned.slice(6)}`; 
- } 
- return phoneNumber; 
+function validatePhoneNumber(phoneNumber) {
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    return phoneRegex.test(phoneNumber);
 }
 
 function updateSliderValue(value) {
@@ -154,70 +121,266 @@ function updateSliderValue(value) {
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.forms['registration'];
 
-    form['userid'].addEventListener("input", validateUserId);
-    form['firstname'].addEventListener("input", validateFirstName);
-    form['lastname'].addEventListener("input", validateLastName);
-    form['pass_hashed'].addEventListener("input", validatePassword);
-    form['pass_hashed2'].addEventListener("input", validateConfirmPassword);
-    form['email'].addEventListener("input", validateEmailField);
-    form['phone'].addEventListener("input", validatePhoneField);
+    form['userid'].addEventListener("input", function() { validateField('userid', validateUserId, 'User ID should be at least 5 characters.'); });
+    form['firstname'].addEventListener("input", function() { validateField('firstname', validateFirstName, 'First name is too short or contains invalid characters.'); });
+    form['lastname'].addEventListener("input", function() { validateField('lastname', validateLastName, 'Last name is too short or contains invalid characters.'); });
+    form['pass_hashed'].addEventListener("input", function() { validateField('pass_hashed', validatePassword, 'Password cannot contain User ID, First Name, or Last Name.'); });
+    form['pass_hashed2'].addEventListener("input", function() { validateField('pass_hashed2', validateConfirmPassword, 'Passwords do not match.'); });
+    form['email'].addEventListener("input", function() { validateField('email', validateEmailField, 'Invalid email format.'); });
+    form['phone'].addEventListener("input", function() { validateField('phone', validatePhoneField, 'Invalid phone number format.'); });
 });
 
-function validateUserId() {
-    const userId = document.forms['registration'].elements['userid'].value;
-    displayMessage("userid", userId.length >= 5 ? "User ID looks good!" : "User ID should be at least 5 characters.");
+function validateField(fieldId, validationFunction, errorMessage) {
+    const field = document.forms['registration'].elements[fieldId];
+    const messageBox = displayMessage(fieldId, validationFunction(field.value) ? "" : errorMessage);
+
+    if (validationFunction(field.value)) {
+        messageBox.style.backgroundColor = "green"; 
+        messageBox.innerText = "Valid input!";
+    } else {
+        messageBox.style.backgroundColor = "red";  
+        messageBox.innerText = errorMessage;
+    }
+    messageBox.style.display = "block";  
 }
 
-function validateFirstName() {
-    const firstName = document.forms['registration'].elements['firstname'].value;
-    displayMessage("firstname", firstName.length >= 2 && /^[a-zA-Z'-]+$/.test(firstName) ? "Valid first name." : "First name is too short or contains invalid characters.");
+function displayMessage(fieldId, message) {
+    let messageBox = document.getElementById(`${fieldId}-message`);
+    
+    if (!messageBox) {
+        messageBox = document.createElement("div");
+        messageBox.id = `${fieldId}-message`;
+        messageBox.className = "validation-message";
+        document.body.appendChild(messageBox);
+    }
+    
+    messageBox.innerText = message;
+    return messageBox;
 }
 
-function validateLastName() {
-    const lastName = document.forms['registration'].elements['lastname'].value;
-    displayMessage("lastname", lastName.length >= 2 && /^[a-zA-Z'-]+$/.test(lastName) ? "Valid last name." : "Last name is too short or contains invalid characters.");
+function validateUserId(userId) {
+    return userId.length >= 5;
 }
 
-function validatePassword() {
+function validateFirstName(firstName) {
+    return firstName.length >= 2 && /^[a-zA-Z'-]+$/.test(firstName);
+}
+
+function validateLastName(lastName) {
+    return lastName.length >= 2 && /^[a-zA-Z'-]+$/.test(lastName);
+}
+
+function validatePassword(password) {
     const form = document.forms['registration'];
-    const password = form.elements['pass_hashed'].value;
     const userId = form.elements['userid'].value;
     const firstName = form.elements['firstname'].value;
     const lastName = form.elements['lastname'].value;
-    
-    let message = "Password is valid.";
-    if (password.includes(userId) || password.includes(firstName) || password.includes(lastName)) {
-        message = "Password cannot contain User ID, First Name, or Last Name.";
-    }
-    displayMessage("pass_hashed", message);
+    return !(password.includes(userId) || password.includes(firstName) || password.includes(lastName));
 }
 
 function validateConfirmPassword() {
     const form = document.forms['registration'];
     const password = form.elements['pass_hashed'].value;
     const confirmPassword = form.elements['pass_hashed2'].value;
-
-    displayMessage("pass_hashed2", password === confirmPassword ? "Passwords match." : "Passwords do not match.");
+    return password === confirmPassword;
 }
 
-function validateEmailField() {
-    const email = document.forms['registration'].elements['email'].value;
-    displayMessage("email", validateEmail(email) ? "Valid email." : "Invalid email format.");
+function validateEmailField(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
 }
 
-function validatePhoneField() {
-    const phoneNumber = document.forms['registration'].elements['phone'].value;
-    displayMessage("phone", validatePhoneNumber(phoneNumber) ? "Valid phone number." : "Invalid phone number format.");
+function validatePhoneField(phoneNumber) {
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    return phoneRegex.test(phoneNumber);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const validateButton = document.getElementById('validate-btn');
+    
+    validateButton.addEventListener('click', function(event) {
+        event.preventDefault();  
+        getdata1();              
+    });
+});
+
+function getdata1() {
+    var formcontents = document.forms['registration'];
+    var formoutput = "<h2>Please review the following information:</h2>";
+    formoutput += "<ul>";  
+    var errorMessages = [];
+    var error_flag = 0;
+
+    var userId = formcontents.elements['userid'].value;
+    var firstName = formcontents.elements['firstname'].value;
+    var lastName = formcontents.elements['lastname'].value;
+    var password = formcontents.elements['pass_hashed'].value;
+    var confirmPassword = formcontents.elements['pass_hashed2'].value;
+    var email = formcontents.elements['email'].value;
+    var phoneNumber = formcontents.elements['phone'].value;
+
+    if (password !== confirmPassword) {
+        errorMessages.push("Passwords do not match.");
+        error_flag = 1;
+    } else if (password === userId || password.includes(userId) || password.includes(firstName) || password.includes(lastName)) {
+        errorMessages.push("Password cannot contain User ID, First Name, or Last Name.");
+        error_flag = 1;
+    }
+
+    if (firstName.length < 2 || !firstName.match(/^[a-zA-Z'-]+$/)) {
+        errorMessages.push("Invalid First Name: Too short or contains invalid characters.");
+        error_flag = 1;
+    }
+
+    if (lastName.length < 2 || !lastName.match(/^[a-zA-Z'-]+$/)) {
+        errorMessages.push("Invalid Last Name: Too short or contains invalid characters.");
+        error_flag = 1;
+    }
+
+    if (!validateEmail(email)) {
+        errorMessages.push("Invalid email format.");
+        error_flag = 1;
+    }
+
+    if (!validatePhoneNumber(phoneNumber)) {
+        errorMessages.push("Invalid phone number format.");
+        error_flag = 1;
+    }
+
+    for (i = 0; i < formcontents.length; i++) {
+        var elementName = formcontents.elements[i].name;
+        var elementValue = formcontents.elements[i].value;
+
+        if (formcontents.elements[i].type !== "button" && 
+            formcontents.elements[i].type !== "submit" && 
+            formcontents.elements[i].type !== "reset") {
+
+            if (formcontents.elements[i].type === "checkbox" && formcontents.elements[i].checked) {
+                if (elementName === "past_ailments") {
+                    formoutput += `<li><strong>Past Ailments:</strong> ${elementValue}</li>`;
+                }
+            } else if (formcontents.elements[i].type === "radio" && formcontents.elements[i].checked) {
+                formoutput += `<li><strong>${elementName}:</strong> ${elementValue}</li>`;
+            } else if (formcontents.elements[i].type === "text" && elementName !== "ssn_obscured" && elementValue !== "") {
+                formoutput += `<li><strong>${elementName}:</strong> ${elementValue}</li>`;
+            } else if (formcontents.elements[i].type === "date" && elementName === "dob") {
+                const formattedDate = new Date(elementValue).toLocaleDateString();
+                formoutput += `<li><strong>Date of Birth:</strong> ${formattedDate}</li>`;
+            }
+        }
+    }
+
+    if (error_flag) {
+        alert("Please correct the following errors:\n\n" + errorMessages.join("\n"));
+        document.getElementById("submit-btn").style.display = "none"; 
+    } else {
+        alert("All fields are valid. You may now submit the form.");
+        document.getElementById("submit-btn").style.display = "inline"; 
+    }
+
+    if (errorMessages.length > 0) {
+        formoutput += "<li><strong>Errors:</strong></li>";
+        formoutput += "<ul>";  
+        errorMessages.forEach(function(msg) {
+            formoutput += `<li>${msg}</li>`;
+        });
+        formoutput += "</ul>";
+    }
+
+    formoutput += "</ul>";  
+    document.getElementById("output").innerHTML = formoutput;
+}
+
+
+function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+}
+
+function validatePhoneNumber(phoneNumber) {
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    return phoneRegex.test(phoneNumber);
+}
+
+function updateSliderValue(value) {
+    document.getElementById("slider-value").textContent = value;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.forms['registration'];
+
+    form['userid'].addEventListener("input", function() { validateField('userid', validateUserId, 'User ID should be at least 5 characters.'); });
+    form['firstname'].addEventListener("input", function() { validateField('firstname', validateFirstName, 'First name is too short or contains invalid characters.'); });
+    form['lastname'].addEventListener("input", function() { validateField('lastname', validateLastName, 'Last name is too short or contains invalid characters.'); });
+    form['pass_hashed'].addEventListener("input", function() { validateField('pass_hashed', validatePassword, 'Password cannot contain User ID, First Name, or Last Name.'); });
+    form['pass_hashed2'].addEventListener("input", function() { validateField('pass_hashed2', validateConfirmPassword, 'Passwords do not match.'); });
+    form['email'].addEventListener("input", function() { validateField('email', validateEmailField, 'Invalid email format.'); });
+    form['phone'].addEventListener("input", function() { validateField('phone', validatePhoneField, 'Invalid phone number format.'); });
+});
+
+function validateField(fieldId, validationFunction, errorMessage) {
+    const field = document.forms['registration'].elements[fieldId];
+    const messageBox = displayMessage(fieldId, validationFunction(field.value) ? "" : errorMessage);
+
+    if (validationFunction(field.value)) {
+        messageBox.style.backgroundColor = "green"; 
+        messageBox.innerText = "Valid input!";
+    } else {
+        messageBox.style.backgroundColor = "red";  
+        messageBox.innerText = errorMessage;
+    }
+    messageBox.style.display = "block";  
 }
 
 function displayMessage(fieldId, message) {
-    const messageBox = document.getElementById(`${fieldId}-message`);
+    let messageBox = document.getElementById(`${fieldId}-message`);
+    
     if (!messageBox) {
-        const newMessageBox = document.createElement("div");
-        newMessageBox.id = `${fieldId}-message`;
-        newMessageBox.className = "validation-message";
-        document.body.appendChild(newMessageBox);
+        messageBox = document.createElement("div");
+        messageBox.id = `${fieldId}-message`;
+        messageBox.className = "validation-message";
+        document.body.appendChild(messageBox);
     }
-    document.getElementById(`${fieldId}-message`).innerText = message;
+    
+    messageBox.innerText = message;
+    return messageBox;
 }
+
+function validateUserId(userId) {
+    return userId.length >= 5;
+}
+
+function validateFirstName(firstName) {
+    return firstName.length >= 2 && /^[a-zA-Z'-]+$/.test(firstName);
+}
+
+function validateLastName(lastName) {
+    return lastName.length >= 2 && /^[a-zA-Z'-]+$/.test(lastName);
+}
+
+function validatePassword(password) {
+    const form = document.forms['registration'];
+    const userId = form.elements['userid'].value;
+    const firstName = form.elements['firstname'].value;
+    const lastName = form.elements['lastname'].value;
+    return !(password.includes(userId) || password.includes(firstName) || password.includes(lastName));
+}
+
+function validateConfirmPassword() {
+    const form = document.forms['registration'];
+    const password = form.elements['pass_hashed'].value;
+    const confirmPassword = form.elements['pass_hashed2'].value;
+    return password === confirmPassword;
+}
+
+function validateEmailField(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+}
+
+function validatePhoneField(phoneNumber) {
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    return phoneRegex.test(phoneNumber);
+}
+
 
