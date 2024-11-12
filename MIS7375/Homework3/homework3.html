@@ -1,4 +1,3 @@
-
 <!-- 
 Program name: homework3.html
 Author: Tyrese Franklin
@@ -9,39 +8,53 @@ Description: Validating data on the fly with event listeners while still using h
 
 
        
-<!doctype html>
+<!doctype html>      
 <html>
     <head>
+    <body>
         <meta charset="utf-8">
+
         <title>Tyrese's Homework 3</title>
+
+        <!-- External CSS styles -->
         <link rel="stylesheet" href="style.css">
+    
+        <!-- External JS -->
         <script src="loadfooter.js" defer></script> 
         <script src="homework3.js" defer></script>
         <script src="date.js" defer></script>
-    </head>
-    <body>
-        <div id="header" class="header-background"> 
-            <table width="100%">
-                <tr>
-                    <td>
-                        <img id="logo" src="harmony-one-logo.png" width="5%">
-                    </td>
-                    <td>
-                        <h1>Harmony Health Clinic</h1>
-                    </td>
-                    <td>
-                        <span class="date">Today's date: <span id="today"></span></span>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <hr>
+
         
-        <h2>Registration Form</h2>
-        <div id="body">
-            <div class="form-container">
-                <form name="registration" action="homework1-thankyou.html" onsubmit="return formValidation();">
-                    <p>Password must include 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character.</p><br><br>
+    </head>
+        
+<div id="header" class="header-background"> 
+        <table width="100%">
+            <tr>
+                <td>
+                    <img id="logo" src="harmony-one-logo.png" width:"5%">
+                </td>
+                <td>
+                    <h1>Harmony Health Clinic</h1>
+                </td>
+                <td>
+                    <span class="date">Today's date: <span id="today"></span></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+
+        
+<!-- Form -->
+
+<h2>Registration Form</h2>
+
+<div id="body">
+    <div class="form-container">
+
+    <form name='registration' action="homework1-thankyou.html" onSubmit="return formValidation();"><br>
+
+            <p4 for="passinstructions">Password must include 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character.</p4><br><br>
             
             <label for="userid">New User ID:</label>
             <input  type="text" 
@@ -347,6 +360,9 @@ Description: Validating data on the fly with event listeners while still using h
     <div id="footer-placeholder"></div> 
 
 
+
+</body>
+</html>
 
 </body>
 </html>
