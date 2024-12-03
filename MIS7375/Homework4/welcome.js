@@ -46,18 +46,32 @@ document.addEventListener('DOMContentLoaded', () => {
         header.innerHTML = 'Welcome New User!';
     }
 
-    // Form submission
+    // Form submission (updated to handle validation, cookies, and redirection)
     form.addEventListener('submit', (event) => {
-        event.preventDefault();
+        event.preventDefault();  // Prevent the default form submission
+
+        // Get the name from the form
         const name = document.getElementById('first-name').value;
 
-        if (rememberMe.checked) {
-            setCookie('firstName', name, 48); // Save cookie for 48 hours
-        } else {
-            deleteCookie('firstName');
+        // Form validation
+        if (!name) {
+            alert("First name is required!");
+            return;  // Stop submission if validation fails
         }
 
+        // Handle cookie creation based on "remember me" checkbox
+        if (rememberMe.checked) {
+            setCookie('firstName', name, 48);  // Save cookie for 48 hours
+        } else {
+            deleteCookie('firstName');  // Delete cookie if not remembered
+        }
+
+        // Update header message and redirect
         header.innerHTML = `Welcome back, ${name}!`;
         alert('Form submitted successfully.');
+
+        // Redirect to thank you page
+        window.location.href = 'homework1-thankyou.html';
     });
 });
+
