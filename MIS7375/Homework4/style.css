@@ -7,12 +7,8 @@
  */
 
 .header {
-  position: sticky;
-  top: 0;
-  padding: 10px 16px;
-}
-
-.header-background {
+    position: sticky;
+    top: 0;
     background-color: #429E9D; 
     padding: 10px; 
 }
