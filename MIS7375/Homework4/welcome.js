@@ -75,3 +75,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+form.addEventListener('submit', (event) => {
+     event.preventDefault();  // Prevent the default form submission
+
+     const name = document.getElementById('first-name').value;
+
+     console.log(`Form submitted with name: ${name}`);  // Log name input
+
+     if (!name) {
+         alert("First name is required!");
+         return;
+     }
+
+     // Handle cookie creation based on "remember me" checkbox
+     if (rememberMe.checked) {
+         setCookie('firstName', name, 48);  // Save cookie for 48 hours
+     } else {
+         deleteCookie('firstName');  // Delete cookie if not remembered
+     }
+
+     console.log(`Cookie set for firstName: ${name}`);  // Debug log after cookie is set
+
+     header.innerHTML = `Welcome back, ${name}!`;
+     alert('Form submitted successfully.');
+     window.location.href = 'homework1-thankyou.html';
+ });
+
+
