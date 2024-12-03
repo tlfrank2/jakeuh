@@ -6,6 +6,11 @@
  Purpose: CSS Style sheet for MIS 3371 Homework 1
  */
 
+.header {
+  position: sticky;
+  top: 0;
+  padding: 10px 16px;
+}
 
 .header-background {
     background-color: #429E9D; 
