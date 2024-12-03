@@ -15,11 +15,6 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
 }
 
-.header-background {
-    background-color: #429E9D; 
-    padding: 10px; 
-}
-
 #logo {
     width: 100px;
     height: auto; 
