@@ -6,6 +6,49 @@
  Purpose: To validate data on the fly and manage cookies.
 */
 
+           document.addEventListener('DOMContentLoaded', () => {
+               const userFirstName = getCookie('firstName');
+               const welcomeDiv = document.createElement('div');
+               welcomeDiv.id = 'dynamic-welcome';
+               if (userFirstName) {
+                   welcomeDiv.innerHTML = `
+                       <h2>Welcome back, ${userFirstName}!</h2>
+                       <label>
+                           <input type="checkbox" id="reset-user" onclick="resetUserCookie()">
+                           Not ${userFirstName}? Click here to start as a new user.
+                       </label>
+                   `;
+               } else {
+                   welcomeDiv.innerHTML = `<h2>Welcome New User!</h2>`;
+               }
+               document.body.insertBefore(welcomeDiv, document.body.firstChild);
+           });
+       
+           function getCookie(name) {
+               const cookieArray = document.cookie.split('; ');
+               for (let cookie of cookieArray) {
+                   const [key, value] = cookie.split('=');
+                   if (key === name) return decodeURIComponent(value);
+               }
+               return null;
+           }
+       
+           function setCookie(name, value, days) {
+               const expiryDate = new Date();
+               expiryDate.setTime(expiryDate.getTime() + days * 24 * 60 * 60 * 1000);
+               document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expiryDate.toUTCString()}; path=/`;
+           }
+       
+           function deleteCookie(name) {
+               document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+           }
+       
+           function resetUserCookie() {
+               deleteCookie('firstName');
+               location.reload();
+           }
+    
+
 function formValidation() {
     const firstName = document.forms['registration']['firstname'].value;
     const rememberMe = document.getElementById('rememberMe').checked;
