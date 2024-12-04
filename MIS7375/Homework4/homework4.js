@@ -1,6 +1,6 @@
 /* 
  Name: Tyrese Franklin
- File: homework3.js
+ File: homework4.js
  Date Created: 2024-11-20
  Date Updated: 2024-12-04
  Purpose: To validate data on the fly and manage cookies.
@@ -11,12 +11,12 @@ function formValidation() {
     const rememberMe = document.getElementById('rememberMe').checked;
 
     if (rememberMe) {
-        setCookie('firstName', firstName, 2); // Set cookie for 2 days
-    } else {
-        deleteCookie('firstName');
-    }
-    return true; // Proceed with form submission
-}
+        setCookie('firstName', firstName, 2); 
+       } else {
+           deleteCookie('firstName');
+       }
+       return true; 
+   }
 
 document.addEventListener('DOMContentLoaded', () => {
     const userFirstName = getCookie('firstName');
@@ -24,13 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.forms['registration']['firstname'].value = userFirstName;
     }
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-    const validateButton = document.getElementById('validate-btn');
-    const form = document.forms['registration'];
-
-    // Pre-fill form fields from cookies if available
-    loadFormFromCookies(form);
+          
+          document.addEventListener("DOMContentLoaded", function () {
+              const validateButton = document.getElementById('validate-btn');
+              const form = document.forms['registration'];
+          
+              loadFormFromCookies(form);
 
     validateButton.addEventListener('click', function (event) {
         event.preventDefault();
@@ -53,7 +52,6 @@ function getdata1() {
     var email = formcontents.elements['email'].value;
     var phoneNumber = formcontents.elements['phone'].value;
 
-    // Password validation
     if (password !== confirmPassword) {
         errorMessages.push("Passwords do not match.");
         error_flag = 1;
@@ -62,18 +60,16 @@ function getdata1() {
         error_flag = 1;
     }
 
-    // Name validation
-    if (!validateFirstName(firstName)) {
-        errorMessages.push("Invalid First Name: Too short or contains invalid characters.");
-        error_flag = 1;
-    }
+      if (!validateFirstName(firstName)) {
+          errorMessages.push("Invalid First Name: Too short or contains invalid characters.");
+          error_flag = 1;
+      }
 
     if (!validateLastName(lastName)) {
         errorMessages.push("Invalid Last Name: Too short or contains invalid characters.");
         error_flag = 1;
     }
 
-    // Email and phone validation
     if (!validateEmail(email)) {
         errorMessages.push("Invalid email format.");
         error_flag = 1;
@@ -87,15 +83,13 @@ function getdata1() {
     if (error_flag) {
         alert("Please correct the following errors:\n\n" + errorMessages.join("\n"));
         document.getElementById("submit-btn").style.display = "none";
-    } else {
-        alert("All fields are valid. You may now submit the form.");
-        document.getElementById("submit-btn").style.display = "inline";
+       } else {
+           alert("All fields are valid. You may now submit the form.");
+           document.getElementById("submit-btn").style.display = "inline";
+   
+           saveFormToCookies(formcontents);
+       }
 
-        // Save valid data to cookies
-        saveFormToCookies(formcontents);
-    }
-
-    // Output errors and form details
     if (errorMessages.length > 0) {
         formoutput += "<li><strong>Errors:</strong></li><ul>";
         errorMessages.forEach(function (msg) {
@@ -107,7 +101,6 @@ function getdata1() {
     document.getElementById("output").innerHTML = formoutput;
 }
 
-// Save form data to cookies
 function saveFormToCookies(form) {
     for (let i = 0; i < form.elements.length; i++) {
         let element = form.elements[i];
@@ -118,7 +111,6 @@ function saveFormToCookies(form) {
     }
 }
 
-// Load form data from cookies
 function loadFormFromCookies(form) {
     const cookies = document.cookie.split("; ");
     const cookieData = {};
@@ -139,11 +131,10 @@ function loadFormFromCookies(form) {
     }
 }
 
-// Validation functions
-function validateEmail(email) {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-}
+   function validateEmail(email) {
+       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+       return emailRegex.test(email);
+   }
 
 function validatePhoneNumber(phoneNumber) {
     const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
@@ -152,8 +143,8 @@ function validatePhoneNumber(phoneNumber) {
 
 function validateFirstName(firstName) {
     return firstName.length >= 2 && /^[a-zA-Z'-]+$/.test(firstName);
-}
-
-function validateLastName(lastName) {
-    return lastName.length >= 2 && /^[a-zA-Z'-]+$/.test(lastName);
-}
+     }
+     
+     function validateLastName(lastName) {
+         return lastName.length >= 2 && /^[a-zA-Z'-]+$/.test(lastName);
+     }
