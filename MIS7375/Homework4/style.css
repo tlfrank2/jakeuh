@@ -6,6 +6,7 @@
  Purpose: CSS Style sheet for MIS 3371 Homework 1
  */
 
+
 .sticky-header {
     position: sticky;
     top: 0; /* Sticks to the top of the viewport */
@@ -28,19 +29,16 @@
     font-size: 20px; 
     color: #333;
     font-style: italic;
-    text-align: center; /* Center the date text */
+    align-content: center
+    ; 
 }
 
 body {
     font-family: "Optima", sans-serif;
-    font-size: 20px;
+    font-size:20px;
     background-image: url(./harmonybckgrnd.png);
     background-size: cover;
     background-repeat: no-repeat;
-    margin: 0;
-    padding: 0;
-    /* Added padding-top to prevent the sticky header from overlapping content */
-    padding-top: 80px; /* Adjust based on header height */
 }
 
 h1 {
@@ -48,34 +46,32 @@ h1 {
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
     color: white;
-    font-size: 75px;
-}
+    font-size: 75px ;
+} 
 
 h2 {
     text-align: center;
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
     color: black;
-}
+} 
 
 .form-container {
-    background-color: rgba(66, 158, 157, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    margin: 20px auto;
-    width: 85%;
-    position: relative;
-    z-index: 5; /* Ensure form is above background */
+    background-color: rgba(66, 158, 157, 0.8); 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    margin: 20px auto; 
+    width: 85%; 
 }
 
 .output-box {
-    background-color: rgba(66, 158, 157, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    margin: 20px auto;
-    width: 85%;
+    background-color: rgba(66, 158, 157, 0.8); 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    margin: 20px auto; 
+    width: 85%; 
 }
 
 .outputdata {
@@ -96,11 +92,11 @@ h2 {
 }
 
 #submit-btn {
-    display: none;
+    display: none; 
 }
 
 #submit-btn.show {
-    display: inline-block;
+    display: inline-block; 
     background-color: #429E9D;
     color: white;
     padding: 10px 20px;
