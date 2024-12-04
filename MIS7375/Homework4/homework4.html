@@ -1,5 +1,5 @@
 <!-- 
-Program name: homework3.html
+Program name: homework4.html
 Author: Tyrese Franklin
 Date created: 2024-11-20
 Date last edited: 2024-12-4
@@ -14,16 +14,62 @@ Description: Validating data on the fly with event listeners while still using h
     <body>
         <meta charset="utf-8">
 
-        <title>Tyrese's Homework 3</title>
+        <title>Tyrese's Homework 4</title>
 
         <!-- External CSS styles -->
         <link rel="stylesheet" href="style.css">
     
         <!-- External JS -->
-        <script src="homework3.js"></script> 
+        <script src="homework4.js" defer></script>
         <script src="loadfooter.js" defer></script> 
         <script src="date.js" defer></script>
- 
+
+       <script>
+           document.addEventListener('DOMContentLoaded', () => {
+               const userFirstName = getCookie('firstName');
+               const welcomeDiv = document.createElement('div');
+               welcomeDiv.id = 'dynamic-welcome';
+               if (userFirstName) {
+                   welcomeDiv.innerHTML = `
+                       <h2>Welcome back, ${userFirstName}!</h2>
+                       <label>
+                           <input type="checkbox" id="reset-user" onclick="resetUserCookie()">
+                           Not ${userFirstName}? Click here to start as a new user.
+                       </label>
+                   `;
+               } else {
+                   welcomeDiv.innerHTML = `<h2>Welcome New User!</h2>`;
+               }
+               document.body.insertBefore(welcomeDiv, document.body.firstChild);
+           });
+       
+           function getCookie(name) {
+               const cookieArray = document.cookie.split('; ');
+               for (let cookie of cookieArray) {
+                   const [key, value] = cookie.split('=');
+                   if (key === name) return decodeURIComponent(value);
+               }
+               return null;
+           }
+       
+           function setCookie(name, value, days) {
+               const expiryDate = new Date();
+               expiryDate.setTime(expiryDate.getTime() + days * 24 * 60 * 60 * 1000);
+               document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expiryDate.toUTCString()}; path=/`;
+           }
+       
+           function deleteCookie(name) {
+               document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+           }
+       
+           function resetUserCookie() {
+               deleteCookie('firstName');
+               location.reload();
+           }
+       </script>
+
+
+        
     </head>
         
 <div id="header" class="sticky-header"> 
@@ -369,6 +415,11 @@ Description: Validating data on the fly with event listeners while still using h
 </div>
     <!-- Footer -->
     <div id="footer-placeholder"></div> 
+
+
+
+</body>
+</html>
 
 
 
