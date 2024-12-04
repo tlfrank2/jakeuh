@@ -2,18 +2,18 @@
  Name: Tyrese Franklin
  File: style.css
  Date Created: 2024-09-15
- Date Updated: 2024-09-21
+ Date Updated: 2024-12-4
  Purpose: CSS Style sheet for MIS 3371 Homework 1
  */
 
 
 .sticky-header {
     position: sticky;
-    top: 0; /* Sticks to the top of the viewport */
-    z-index: 1000; /* Ensures the header stays above other content */
-    background-color: #429E9D; /* Matches the header's background color */
+    top: 0; 
+    z-index: 1000; 
+    background-color: #429E9D; 
     padding: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
 }
 
 #logo {
