@@ -6,6 +6,25 @@
  Purpose: To validate data on the fly and manage cookies.
 */
 
+function formValidation() {
+    const firstName = document.forms['registration']['firstname'].value;
+    const rememberMe = document.getElementById('rememberMe').checked;
+
+    if (rememberMe) {
+        setCookie('firstName', firstName, 2); // Set cookie for 2 days
+    } else {
+        deleteCookie('firstName');
+    }
+    return true; // Proceed with form submission
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const userFirstName = getCookie('firstName');
+    if (userFirstName) {
+        document.forms['registration']['firstname'].value = userFirstName;
+    }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     const validateButton = document.getElementById('validate-btn');
     const form = document.forms['registration'];
