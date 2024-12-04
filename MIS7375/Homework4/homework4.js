@@ -148,3 +148,34 @@ function validateFirstName(firstName) {
      function validateLastName(lastName) {
          return lastName.length >= 2 && /^[a-zA-Z'-]+$/.test(lastName);
      }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.forms['registration'];
+
+    form['userid'].addEventListener("input", function() { validateField('userid', validateUserId, 'User ID should be at least 5 characters.'); });
+    form['firstname'].addEventListener("input", function() { validateField('firstname', validateFirstName, 'First name is too short or contains invalid characters.'); });
+    // Additional event listeners for other fields...
+});
+
+function validateField(fieldId, validationFunction, errorMessage) {
+    const field = document.forms['registration'].elements[fieldId];
+    const messageBox = displayMessage(fieldId, validationFunction(field.value) ? "" : errorMessage);
+
+    if (validationFunction(field.value)) {
+        messageBox.style.backgroundColor = "green"; 
+        messageBox.innerText = "Valid input!";
+    } else {
+        messageBox.style.backgroundColor = "red";  
+        messageBox.innerText = errorMessage;
+    }
+    messageBox.style.display = "block";  
+}
+
+if (firstName.length < 2 || !firstName.match(/^[a-zA-Z'-]+$/)) {
+    errorMessages.push("Invalid First Name: Too short or contains invalid characters.");
+    error_flag = 1;
+}
+function updateSliderValue(value) {
+    document.getElementById("slider-value").textContent = value;
+}
+
