@@ -1,7 +1,7 @@
 /* 
  Name: Tyrese Franklin
  File: homework3.js
- Date Created: 2024-12-20
+ Date Created: 2024-11-20
  Date Updated: 2024-12-04
  Purpose: To validate data on the fly and manage cookies.
 */
